@@ -1,4 +1,5 @@
 import sys
+import stack
 
 #One at ___ (add var)
 #___ is lit(var = __)
@@ -8,19 +9,14 @@ import sys
 #Drop AWP (move down var stack)
 #PEEK (print)
 def interpret(lines):
+    var_stack = stack.Stack()
 
-    stack = []
-    pointer = -1
-    
     for line in lines:
         if line == "PEEK":
-            if pointer == -1:
-                raise Exception('\n No vars to print')
-            print(stack[pointer])
+            var_stack.print()
 
         if line[:7] == "One at ":
-            stack.append(line.split(' ')[2])
-            pointer += 1
+            var_stack.push(line.split(' ')[2])
         
 if __name__ == "__main__":
     if len(sys.argv) == 1:
