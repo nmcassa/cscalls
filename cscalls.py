@@ -2,21 +2,40 @@ import sys
 import stack
 
 #One at ___ (add var)
-#___ is lit(var = __)
-#___ is hacking (remove var from stack)
-#Please watch
-#I can drop (move up var stack)
-#Drop AWP (move down var stack)
+#hacking istg pls report(remove var from stack)
+#Tagged ____ times (move pointer to index)
+#I'm loaded I can drop (move up var stack)
+#GRAB AWP (move down var stack)
+#HELP ___ (Label)
+#Why is no one ___ (Goto)
 #PEEK (print)
+#WHERES MY TEAM (print stack)
 def interpret(lines):
     var_stack = stack.Stack()
+    curr = 0
 
-    for line in lines:
-        if line == "PEEK":
+    while curr < len(lines):
+        line = lines[curr]
+        
+        if 'PEEK' in line:
             var_stack.print()
 
+        if 'WHERES MY TEAM' in line:
+            var_stack.print_stack()
+
         if line[:7] == "One at ":
-            var_stack.push(line.split(' ')[2])
+            var_stack.push(line[7:])
+
+        if 'hacking istg pls report' in line:
+            var_stack.remove()
+
+        if 'I\'m loaded I can drop' in line:
+            var_stack.up()
+
+        if 'GRAB AWP' in line:
+            var_stack.down()
+
+        curr += 1
         
 if __name__ == "__main__":
     if len(sys.argv) == 1:
