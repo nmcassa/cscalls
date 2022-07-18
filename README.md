@@ -3,6 +3,8 @@
 
 ## Syntax
 
+| cscall | action |
+| --- | --- |
 | One at ___ | Add var to stack |
 | hacking istg pls report | Remove var at pointer |
 | I'm loaded I can drop | move up var stack |
