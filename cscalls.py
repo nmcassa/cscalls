@@ -8,8 +8,10 @@ import stack
 #GRAB AWP (move down var stack)
 #HELP ___ (Label)
 #Why is no one ___ (Goto)
+#You see him (Look)
 #PEEK (print)
 #WHERES MY TEAM (print stack)
+#team? (input)
 def interpret(lines):
     var_stack = stack.Stack()
     curr = 0
@@ -22,6 +24,8 @@ def interpret(lines):
 
         if 'WHERES MY TEAM' in line:
             var_stack.print_stack()
+        elif 'team?' in line:
+            var_stack.push(input())
 
         if line[:7] == "One at ":
             var_stack.push(line[7:])
@@ -34,6 +38,12 @@ def interpret(lines):
 
         if 'GRAB AWP' in line:
             var_stack.down()
+
+        if 'You see him' in line:
+            var_stack.look()
+
+        if 'Tagged ' in line:
+            var_stack.index(int(line.split(' ')[1]))
 
         curr += 1
         
