@@ -34,7 +34,7 @@ class Stack:
     def look(self):
         if self.pointer == -1:
             raise Exception('\n No vars to return')
-        return self.arr(self.pointer)
+        return self.arr[self.pointer]
 
     def print(self):
         if self.pointer == -1:

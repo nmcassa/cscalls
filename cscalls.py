@@ -1,19 +1,37 @@
 import sys
 import stack
+import hand
+import label
 
 #One at ___ (add var)
 #hacking istg pls report(remove var from stack)
 #Tagged ____ times (move pointer to index)
 #I'm loaded I can drop (move up var stack)
 #GRAB AWP (move down var stack)
+
 #HELP ___ (Label)
 #Why is no one ___ (Goto)
+#save pls i have $_(compare pointer and held goto if true)
+
+#What skin is that? (set hand to pointer)
+#Drop me AK (get hand)
+#YO INSPECT (print hand)
+
 #You see him (Look)
 #PEEK (print)
 #WHERES MY TEAM (print stack)
 #team? (input)
 def interpret(lines):
+    labels = []
     var_stack = stack.Stack()
+    held_var = hand.Hand()
+    curr = 0
+
+    for line in lines:
+        if 'HELP' in line:
+            labels.append(label.Label(line[5:], curr-1))
+        curr += 1
+
     curr = 0
 
     while curr < len(lines):
@@ -22,28 +40,48 @@ def interpret(lines):
         if 'PEEK' in line:
             var_stack.print()
 
-        if 'WHERES MY TEAM' in line:
+        elif 'WHERES MY TEAM' in line:
             var_stack.print_stack()
+
         elif 'team?' in line:
             var_stack.push(input())
 
-        if line[:7] == "One at ":
+        elif line[:7] == "One at ":
             var_stack.push(line[7:])
 
-        if 'hacking istg pls report' in line:
+        elif 'hacking istg pls report' in line:
             var_stack.remove()
 
-        if 'I\'m loaded I can drop' in line:
+        elif 'I\'m loaded I can drop' in line:
             var_stack.up()
 
-        if 'GRAB AWP' in line:
+        elif 'GRAB AWP' in line:
             var_stack.down()
 
-        if 'You see him' in line:
+        elif 'You see him' in line:
             var_stack.look()
 
-        if 'Tagged ' in line:
+        elif 'Tagged ' in line:
             var_stack.index(int(line.split(' ')[1]))
+
+        elif 'What skin' in line:
+            held_var.set(var_stack.look())
+
+        elif 'Drop me AK' in line:
+            held_var.get()
+
+        elif 'YO INSPECT' in line:
+            held_var.print()
+
+        elif 'Why is no one ' in line:
+            for item in labels:
+                if item.name == line[14:]:
+                    curr = item.index
+
+        elif 'save pls i have $' in line:
+            if var_stack.look() is held_var.get():
+                if int(line[17:]) >= 0:
+                    curr = int(line[17:])-1
 
         curr += 1
         
